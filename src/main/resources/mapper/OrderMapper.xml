@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.octave.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.octave.entity.PostOrder">
+    <id column="order_id" jdbcType="INTEGER" property="orderId"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="addr" jdbcType="INTEGER" property="addr"/>
+    <result column="addr_detail" jdbcType="VARCHAR" property="addrDetail"/>
+    <result column="phone" jdbcType="CHAR" property="phone"/>
+    <result column="tel" jdbcType="VARCHAR" property="tel"/>
+    <result column="weight_range" jdbcType="INTEGER" property="weightRange"/>
+    <result column="content" jdbcType="VARCHAR" property="content"/>
+    <result column="date" jdbcType="TIMESTAMP" property="date"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="pickup_phone" jdbcType="CHAR" property="pickupPhone"/>
+    <result column="pickup_tel" jdbcType="VARCHAR" property="pickupTel"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, name, addr, addr_detail, phone, tel, weight_range, content, date, user_id, 
+    pickup_phone, pickup_tel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from postorder
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+
+  <select id="listByUserId" parameterType="integer" resultMap="BaseResultMap">
+    SELECT * FROM postorder WHERE user_id = #{uid}
+  </select>
+
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    select * from postorder WHERE order_id IN
+    <foreach collection="array" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    ;
+  </select>
+
+  <select id="listByTel" parameterType="integer" resultMap="BaseResultMap">
+    select * from postorder WHERE tel = #{tel} OR pickup_tel = #{tel};
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from postOrder
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.octave.entity.PostOrder">
+    insert into postorder (name, addr,
+      addr_detail, phone, tel, 
+      weight_range, content, date, 
+      user_id, pickup_phone, pickup_tel
+      )
+    values ( #{name,jdbcType=VARCHAR}, #{addr,jdbcType=INTEGER},
+      #{addrDetail,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{weightRange,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{pickupPhone,jdbcType=CHAR}, #{pickupTel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.octave.entity.PostOrder">
+    insert into postOrder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="addrDetail != null">
+        addr_detail,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="weightRange != null">
+        weight_range,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="pickupPhone != null">
+        pickup_phone,
+      </if>
+      <if test="pickupTel != null">
+        pickup_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=INTEGER},
+      </if>
+      <if test="addrDetail != null">
+        #{addrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="weightRange != null">
+        #{weightRange,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupPhone != null">
+        #{pickupPhone,jdbcType=CHAR},
+      </if>
+      <if test="pickupTel != null">
+        #{pickupTel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.octave.entity.PostOrder">
+    update postorder
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=INTEGER},
+      </if>
+      <if test="addrDetail != null">
+        addr_detail = #{addrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="weightRange != null">
+        weight_range = #{weightRange,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupPhone != null">
+        pickup_phone = #{pickupPhone,jdbcType=CHAR},
+      </if>
+      <if test="pickupTel != null">
+        pickup_tel = #{pickupTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.octave.entity.PostOrder">
+    update postorder
+    set name = #{name,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=INTEGER},
+      addr_detail = #{addrDetail,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=CHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      weight_range = #{weightRange,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      pickup_phone = #{pickupPhone,jdbcType=CHAR},
+      pickup_tel = #{pickupTel,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

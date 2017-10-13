@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.octave.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.octave.entity.User">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="type" property="type"/>
+        <result column="tel" property="tel"/>
+        <result column="email" property="email" />
+        <result column="locked" property="locked"/>
+    </resultMap>
+
+    <select id="listAll" resultMap="BaseResultMap">
+      SELECT * FROM users
+    </select>
+    
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT * FROM users WHERE user_id = #{param}
+    </select>
+
+    <insert id="save">
+        INSERT INTO users(username, password, type, tel, email)
+          VALUES (#{userName},#{password},#{type},#{tel},#{email});
+    </insert>
+
+    <update id="update">
+        UPDATE users SET username=#{userName},password=#{password},type=#{type},tel=#{tel},email=#{email}
+          WHERE user_id=#{userId}
+    </update>
+
+    <delete id="remove">
+        DELETE FROM users WHERE user_id=#{param}
+    </delete>
+
+    <delete id="removeAll" parameterType="integer">
+      DELETE FROM users WHERE user_id IN 
+      <foreach collection="array" item="item" open="(" separator="," close=")">
+          #{item}
+      </foreach>
+    </delete>
+
+    <select id="checkLogin" resultMap="BaseResultMap">
+        SELECT * FROM users WHERE username=#{param1} AND password=#{param2}
+    </select>
+
+    <select id="getByTel" resultMap="BaseResultMap">
+        select * from users WHERE tel=#{tel};
+    </select>
+</mapper>

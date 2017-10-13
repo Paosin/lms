@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.octave.mapper.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.octave.entity.Address">
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="address" jdbcType="INTEGER" property="address" />
+  </resultMap>
+  <insert id="insert" parameterType="com.octave.entity.Address">
+    insert into address (user_id, address,detial_address)
+    values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=INTEGER},#{detialAddress})
+  </insert>
+</mapper>

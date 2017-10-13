@@ -1,0 +1,16 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>主页</title>
+    <script th:src="@{~/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{~/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}" >
+</head>
+<body>
+<div th:replace="~{comm/navbar :: navbar}"></div>
+
+<div th:include="~{comm/footer :: copyright}"></div>
+</body>
+</html>
